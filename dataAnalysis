@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Transformative Data Systems Infographic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Chosen Palette: Brilliant Blues (#00A1E4, #00BADE, #00D2D2, #89FFFF, #F5FFFF) -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (max-width: 640px) {
+            .chart-container { height: 300px; }
+        }
+        .modal { transition: opacity 0.25s ease; }
+        .modal-content { transition: transform 0.25s ease; }
+    </style>
+</head>
+<body class="bg-[#F5FFFF] text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-6xl">
+
+        <header class="text-center mb-16">
+            <h1 class="text-4xl md:text-5xl font-bold text-[#00A1E4] mb-3">Transformative Data Systems</h1>
+            <p class="text-xl md:text-2xl text-gray-700">Analyzing Data for Progress in School Leadership</p>
+        </header>
+
+        <section class="bg-white p-6 md:p-8 rounded-lg shadow-md mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Pre-Quiz: What's Your Data Mindset?</h2>
+            <p class="text-lg text-gray-700 mb-6 text-center max-w-2xl mx-auto">Let's check our starting point. Answer these three quick questions to gauge your current data mindset.</p>
+            
+            <div class="space-y-6">
+                <!-- Question 1 -->
+                <div>
+                    <p class="text-lg font-semibold text-gray-800 mb-2">1. Data's main purpose in schools is to:</p>
+                    <div id="quizQ1" class="flex flex-col sm:flex-row gap-3">
+                        <div data-answer="0" class="quiz-option flex-1 p-3 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-[#00A1E4] transition duration-150 text-center">Fulfill compliance reports</div>
+                        <div data-answer="0" class="quiz-option flex-1 p-3 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-[#00A1E4] transition duration-150 text-center">Rank students and teachers</div>
+                        <div data-answer="1" class="quiz-option flex-1 p-3 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-[#00A1E4] transition duration-150 text-center">Inform instruction & find equity gaps</div>
+                    </div>
+                </div>
+                <!-- Question 2 -->
+                <div>
+                    <p class="text-lg font-semibold text-gray-800 mb-2">2. A 'KPI' (Key Performance Indicator) is:</p>
+                    <div id="quizQ2" class="flex flex-col sm:flex-row gap-3">
+                        <div data-answer="0" class="quiz-option flex-1 p-3 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-[#00A1E4] transition duration-150 text-center">Any interesting number</div>
+                        <div data-answer="1" class="quiz-option flex-1 p-3 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-[#00A1E4] transition duration-150 text-center">A critical metric tied to a strategic goal</div>
+                        <div data-answer="0" class="quiz-option flex-1 p-3 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-[#00A1E4] transition duration-150 text-center">A report for the superintendent</div>
+                    </div>
+                </div>
+                <!-- Question 3 -->
+                <div>
+                    <p class="text-lg font-semibold text-gray-800 mb-2">3. Looking at disaggregated data (e.g., by subgroup) is:</p>
+                    <div id="quizQ3" class="flex flex-col sm:flex-row gap-3">
+                        <div data-answer="0" class="quiz-option flex-1 p-3 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-[#00A1E4] transition duration-150 text-center">Too complicated and divisive</div>
+                        <div data-answer="1" class="quiz-option flex-1 p-3 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-[#00A1E4] transition duration-150 text-center">Essential for ensuring equity</div>
+                        <div data-answer="0" class="quiz-option flex-1 p-3 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-[#00A1E4] transition duration-150 text-center">Optional if your overall scores are good</div>
+                    </div>
+                </div>
+            </div>
+            
+            <button id="checkQuizBtn" class="bg-[#00A1E4] hover:bg-[#00BADE] text-white font-bold py-3 px-6 rounded-lg shadow transition duration-200 w-full mt-8">
+                Check My Score
+            </button>
+            <div id="quizFeedback" class="hidden mt-4 p-4 rounded-lg text-center font-semibold"></div>
+        </section>
+
+        <section class="bg-white p-6 md:p-8 rounded-lg shadow-md mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Today's Learning Objectives</h2>
+            <p class="text-lg text-gray-700 mb-8 text-center max-w-2xl mx-auto">By the end of this session, you will be able to:</p>
+            
+            <ul class="space-y-4 max-w-2xl mx-auto">
+                <li class="flex items-start text-lg">
+                    <span class="text-xl text-[#00A1E4] mr-3 font-bold">&#10004;</span>
+                    <div><strong class="text-gray-900">Recognize</strong> the value of data-driven leadership in creating equitable outcomes.</div>
+                </li>
+                <li class="flex items-start text-lg">
+                    <span class="text-xl text-[#00A1E4] mr-3 font-bold">&#10004;</span>
+                    <div><strong class="text-gray-900">Identify</strong> high-quality KPIs that align with your school's strategic goals.</div>
+                </li>
+                <li class="flex items-start text-lg">
+                    <span class="text-xl text-[#00A1E4] mr-3 font-bold">&#10004;</span>
+                    <div><strong class="text-gray-900">Practice</strong> basic data analysis to identify trends and disaggregate data for equity.</div>
+                </li>
+                <li class="flex items-start text-lg">
+                    <span class="text-xl text-[#00A1E4] mr-3 font-bold">&#10004;</span>
+                    <div><strong class="text-gray-900">Connect</strong> data insights to a concrete, measurable action plan.</div>
+                </li>
+            </ul>
+        </section>
+
+        <section class="mb-16">
+            <p class="text-lg text-center text-gray-700 max-w-3xl mx-auto mb-8">As school leaders, our decisions shape futures. Moving from "I think" to "I know" is the cornerstone of data-driven leadership. It's not about being a statistician; it's about asking the right questions to illuminate inequities, focus resources, and build a culture of continuous improvement.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                    <div class="text-5xl font-bold text-[#00BADE]">78%</div>
+                    <p class="text-lg text-gray-700 mt-2">Of leaders report data helps identify equity gaps</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                    <div class="text-5xl font-bold text-[#00BADE]">85%</div>
+                    <p class="text-lg text-gray-700 mt-2">Believe data focuses resources more effectively</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                    <div class="text-5xl font-bold text-[#00BADE]">90%</div>
+                    <p class="text-lg text-gray-700 mt-2">Agree it builds a stronger case for change</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-white p-6 md:p-8 rounded-lg shadow-md mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">It Starts with Quality Data</h2>
+            <p class="text-lg text-gray-700 mb-6">Our analysis is only as good as the data we collect. A strong data foundation is built on four key pillars. A weakness in one can compromise the entire structure.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+                <div class="chart-container">
+                    <canvas id="qualityDataChart"></canvas>
+                </div>
+                <div>
+                    <p class="text-lg text-gray-700 mb-4">These four pillars are not optional; they are the definition of quality data:</p>
+                    <ul class="space-y-3">
+                        <li class="flex items-start text-lg">
+                            <span class="text-xl text-[#00A1E4] mr-3">&#10004;</span>
+                            <div><strong class="text-gray-900">Accurate:</strong> Is the data correct and free from errors?</div>
+                        </li>
+                        <li class="flex items-start text-lg">
+                            <span class="text-xl text-[#00A1E4] mr-3">&#10004;</span>
+                            <div><strong class="text-gray-900">Timely:</strong> Is it recent enough to be relevant for decision-making?</div>
+                        </li>
+                        <li class="flex items-start text-lg">
+                            <span class="text-xl text-[#00A1E4] mr-3">&#10004;</span>
+                            <div><strong class="text-gray-900">Consistent:</strong> Is it measured the same way across time and classrooms?</div>
+                        </li>
+                        <li class="flex items-start text-lg">
+                            <span class="text-xl text-[#00A1E4] mr-3">&#10004;</span>
+                            <div><strong class="text-gray-900">Relevant:</strong> Does it actually measure the goal we care about?</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-white p-6 md:p-8 rounded-lg shadow-md mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Tracking What Matters: Key Performance Indicators (KPIs)</h2>
+            <p class="text-lg text-gray-700 mb-6">We are drowning in data but starving for wisdom. Key Performance Indicators (KPIs) are the 3-5 critical metrics that cut through the noise and show if you are achieving your most important strategic goals. They are the vital signs of your school's health.</p>
+            
+            <div class="chart-container">
+                <canvas id="kpiBarChart"></canvas>
+            </div>
+            <p class="text-center text-gray-600 italic mt-4">This chart compares current performance against set goals for sample KPIs. This immediately shows us where we are succeeding (Attendance) and where we are falling short (3rd Grade Reading).</p>
+        </section>
+
+        <section class="bg-white p-6 md:p-8 rounded-lg shadow-md mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">✨ Your Data Coach: Suggest KPIs</h2>
+            <p class="text-lg text-gray-700 mb-6">Need help defining your KPIs? Enter one of your school's major goals below, and our local data coach will suggest 3-5 specific, measurable KPIs to help you track it.</p>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <input type="text" id="kpiGoalInput" placeholder="E.g., 'Improve 9th-grade math scores'" class="flex-grow p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#00A1E4]">
+                <button id="suggestKpiBtn" class="bg-[#00A1E4] text-white font-bold py-3 px-6 rounded-lg shadow hover:bg-[#00BADE] transition duration-200">
+                    Suggest KPIs
+                </button>
+            </div>
+        </section>
+
+        <section class="bg-white p-6 md:p-8 rounded-lg shadow-md mb-16">
+            <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">Post-Quiz: Ready for the Next Step?</h2>
+            <p class="text-lg text-gray-700 mb-6 text-center max-w-2xl mx-auto">You've learned the foundations. These questions test your ability to apply these concepts and spark curiosity for further learning.</p>
+            
+            <div class="space-y-6">
+                <!-- Post-Quiz Question 1 -->
+                <div>
+                    <p class="text-lg font-semibold text-gray-800 mb-2">1. Your 'Teacher Retention' KPI drops 15%. Your <strong class="text-[#00A1E4]">first</strong> data-driven step is to:</p>
+                    <div id="postQuizQ1" class="flex flex-col sm:flex-row gap-3">
+                        <div data-answer="0" class="quiz-option flex-1 p-3 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-[#00A1E4] transition duration-150 text-center">Implement a new bonus program</div>
+                        <div data-answer="1" class="quiz-option flex-1 p-3 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-[#00A1E4] transition duration-150 text-center">Disaggregate the data (by dept., years of service, etc.)</div>
+                        <div data-answer="0" class="quiz-option flex-1 p-3 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-[#00A1E4] transition duration-150 text-center">Request a district-wide salary increase</div>
+                    </div>
+                </div>
+                <!-- Post-Quiz Question 2 -->
+                <div>
+                    <p class="text-lg font-semibold text-gray-800 mb-2">2. 'Predictive Analytics' is an advanced data concept. It helps leaders to:</p>
+                    <div id="postQuizQ2" class="flex flex-col sm:flex-row gap-3">
+                        <div data-answer="1" class="quiz-option flex-1 p-3 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-[#00A1E4] transition duration-150 text-center">Identify current students at high risk for a future problem</div>
+                        <div data-answer="0" class="quiz-option flex-1 p-3 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-[#00A1E4] transition duration-150 text-center">Create more accurate reports of past performance</div>
+                        <div data-answer="0" class="quiz-option flex-1 p-3 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-[#00A1E4] transition duration-150 text-center">Build prettier dashboards for the school board</div>
+                    </div>
+                </div>
+            </div>
+            
+            <button id="checkPostQuizBtn" class="bg-[#00A1E4] hover:bg-[#00BADE] text-white font-bold py-3 px-6 rounded-lg shadow transition duration-200 w-full mt-8">
+                Check My Answers
+            </button>
+            <div id="postQuizFeedback" class="hidden mt-4 p-4 rounded-lg text-center font-semibold"></div>
+        </section>
+
+        <!-- Extra Charts Section (Trends and Dashboard Radar) -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-bold mb-4">Data Trends</h3>
+                <div class="chart-container">
+                    <canvas id="trendsLineChart"></canvas>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-bold mb-4">Dashboards: Quick Quality Check</h3>
+                <div class="chart-container">
+                    <canvas id="dashboardRadarChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <footer class="text-center text-gray-500 text-sm mt-12">
+            Infographic based on the "Transformative Data Systems" training module.
+        </footer>
+    </div>
+
+    <!-- Modal -->
+    <div id="geminiModal" class="modal fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4 hidden opacity-0">
+        <div class="modal-content bg-white w-full max-w-2xl rounded-lg shadow-xl p-6 transform -translate-y-10 scale-95">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="modalTitle" class="text-2xl font-bold text-[#00A1E4]">AI-Generated Suggestions</h3>
+                <button id="closeModalBtn" class="text-gray-500 hover:text-gray-800 text-3xl">&times;</button>
+            </div>
+            <div id="modalContent" class="text-lg text-gray-700 max-h-[60vh] overflow-y-auto">
+                <p>Loading...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+
+            // Modal helpers
+            const geminiModal = document.getElementById('geminiModal');
+            const modalContent = document.getElementById('modalContent');
+            const modalTitle = document.getElementById('modalTitle');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+
+            const showModal = (title, contentHtml) => {
+                modalTitle.innerText = title;
+                modalContent.innerHTML = contentHtml;
+                geminiModal.classList.remove('hidden');
+                setTimeout(() => {
+                    geminiModal.classList.remove('opacity-0');
+                    geminiModal.querySelector('.modal-content').classList.remove('-translate-y-10', 'scale-95');
+                }, 10);
+            };
+
+            const hideModal = () => {
+                geminiModal.classList.add('opacity-0');
+                geminiModal.querySelector('.modal-content').classList.add('-translate-y-10', 'scale-95');
+                setTimeout(() => geminiModal.classList.add('hidden'), 250);
+            };
+
+            if (closeModalBtn) {
+                closeModalBtn.addEventListener('click', hideModal);
+            }
+            if (geminiModal) {
+                geminiModal.addEventListener('click', (e) => {
+                    if (e.target === geminiModal) hideModal();
+                });
+            }
+
+            // -------- Pre-quiz logic (fixed wiring) --------
+            const checkQuizBtn = document.getElementById('checkQuizBtn');
+            const quizFeedback = document.getElementById('quizFeedback');
+            const quizQuestions = [
+                document.getElementById('quizQ1'),
+                document.getElementById('quizQ2'),
+                document.getElementById('quizQ3')
+            ];
+            let quizAnswers = [-1, -1, -1];
+
+            if (checkQuizBtn) {
+                quizQuestions.forEach((question, qIndex) => {
+                    if (!question) return;
+                    const options = question.querySelectorAll('.quiz-option');
+                    options.forEach(option => {
+                        option.addEventListener('click', () => {
+                            options.forEach(opt => opt.classList.remove('bg-[#00A1E4]', 'text-white', 'border-[#00A1E4]'));
+                            option.classList.add('bg-[#00A1E4]', 'text-white', 'border-[#00A1E4]');
+                            quizAnswers[qIndex] = parseInt(option.dataset.answer, 10);
+                        });
+                    });
+                });
+
+                checkQuizBtn.addEventListener('click', () => {
+                    const totalScore = quizAnswers.reduce((acc, val) => acc + (val > 0 ? val : 0), 0);
+                    quizFeedback.classList.remove('hidden', 'bg-red-100', 'text-red-800', 'bg-yellow-100', 'text-yellow-800', 'bg-green-100', 'text-green-800');
+                    // reset color classes
+                    quizFeedback.classList.remove('bg-red-100', 'text-red-800', 'bg-yellow-100', 'text-yellow-800', 'bg-green-100', 'text-green-800');
+
+                    if (quizAnswers.includes(-1)) {
+                        quizFeedback.innerText = 'Please answer all three questions.';
+                        quizFeedback.classList.add('bg-red-100', 'text-red-800');
+                    } else if (totalScore <= 1) {
+                        quizFeedback.innerText = 'Good start! This training is perfect for building a strong data-driven mindset.';
+                        quizFeedback.classList.add('bg-yellow-100', 'text-yellow-800');
+                    } else if (totalScore === 2) {
+                        quizFeedback.innerText = 'Great job! You already have a solid foundation for data-driven leadership.';
+                        quizFeedback.classList.add('bg-green-100', 'text-green-800');
+                    } else {
+                        quizFeedback.innerText = 'Excellent! You\'re already thinking like a transformative data leader. This session will help you refine those skills.';
+                        quizFeedback.classList.add('bg-green-100', 'text-green-800');
+                    }
+                });
+            }
+
+            // -------- Post-quiz logic (corrected wiring) --------
+            const checkPostQuizBtn = document.getElementById('checkPostQuizBtn');
+            const postQuizFeedback = document.getElementById('postQuizFeedback');
+            const postQuizQuestions = [
+                document.getElementById('postQuizQ1'),
+                document.getElementById('postQuizQ2')
+            ];
+            let postQuizAnswers = [-1, -1];
+
+            if (checkPostQuizBtn) {
+                postQuizQuestions.forEach((question, qIndex) => {
+                    if (!question) return;
+                    const options = question.querySelectorAll('.quiz-option');
+                    options.forEach(option => {
+                        option.addEventListener('click', () => {
+                            options.forEach(opt => opt.classList.remove('bg-[#00A1E4]', 'text-white', 'border-[#00A1E4]'));
+                            option.classList.add('bg-[#00A1E4]', 'text-white', 'border-[#00A1E4]');
+                            postQuizAnswers[qIndex] = parseInt(option.dataset.answer, 10);
+                        });
+                    });
+                });
+
+                checkPostQuizBtn.addEventListener('click', () => {
+                    const totalScore = postQuizAnswers.reduce((acc, val) => acc + (val > 0 ? val : 0), 0);
+                    postQuizFeedback.classList.remove('hidden', 'bg-red-100', 'text-red-800', 'bg-yellow-100', 'text-yellow-800', 'bg-green-100', 'text-green-800');
+                    postQuizFeedback.classList.remove('bg-red-100', 'text-red-800', 'bg-yellow-100', 'text-yellow-800', 'bg-green-100', 'text-green-800');
+
+                    if (postQuizAnswers.includes(-1)) {
+                        postQuizFeedback.innerText = 'Please answer both questions.';
+                        postQuizFeedback.classList.add('bg-red-100', 'text-red-800');
+                    } else if (totalScore === 0) {
+                        postQuizFeedback.innerHTML = 'Good try! Remember, always dig deeper into the data (like disaggregating) before acting. This is the core of data-driven leadership!';
+                        postQuizFeedback.classList.add('bg-yellow-100', 'text-yellow-800');
+                    } else if (totalScore === 1) {
+                        postQuizFeedback.innerHTML = 'Good job! You\'re thinking like a data-driven leader. For more on the "next level" concepts, try searching for "predictive analytics in education."';
+                        postQuizFeedback.classList.add('bg-green-100', 'text-green-800');
+                    } else {
+                        postQuizFeedback.innerHTML = 'Excellent! You nailed both the application and the advanced concept. You are ready to explore further topics like predictive analytics and data warehousing. Keep learning!';
+                        postQuizFeedback.classList.add('bg-green-100', 'text-green-800');
+                    }
+                });
+            }
+
+            // -------- KPI Suggestion (local helper, no external API) --------
+            const suggestKpiBtn = document.getElementById('suggestKpiBtn');
+            const kpiGoalInput = document.getElementById('kpiGoalInput');
+
+            function simpleKpiGenerator(goalText) {
+                // Basic heuristics: detect grade or domain
+                const lower = (goalText || '').toLowerCase();
+                const suggestions = [];
+
+                if (!goalText || goalText.trim().length === 0) {
+                    return ['Please provide a clear goal (e.g., "Improve 9th-grade math scores")'];
+                }
+
+                // detect grade like '9th' or '3rd' or '9' (simple regex)
+                const gradeMatch = lower.match(/([0-9]{1,2})(th|st|nd|rd)?\s*-?\s*grade|grade\s*([0-9]{1,2})|([0-9]{1,2})th|([0-9]{1,2})\s*grade/);
+                const mathMatch = lower.includes('math') || lower.includes('mathematics');
+                const readingMatch = lower.includes('read') || lower.includes('literacy');
+                const attendanceMatch = lower.includes('attendance') || lower.includes('present');
+                const retentionMatch = lower.includes('retain') || lower.includes('retention') || lower.includes('turnover');
+
+                // Priority suggestions for common patterns
+                if (mathMatch || gradeMatch) {
+                    suggestions.push('% of students at/above proficiency in the subject (by grade) — target: increase by X%');
+                    suggestions.push('% of students meeting growth targets (year-over-year)');
+                    suggestions.push('Average formative assessment score (monthly)');
+                } 
+                if (readingMatch) {
+                    suggestions.push('% 3rd graders reading at grade level');
+                    suggestions.push('% students meeting benchmark reading growth');
+                }
+                if (attendanceMatch) {
+                    suggestions.push('Average daily attendance rate');
+                    suggestions.push('% of students absent more than 10 days / yr');
+                }
+                if (retentionMatch) {
+                    suggestions.push('Teacher retention rate (annual)');
+                    suggestions.push('% of staff with < 3 years experience retained');
+                }
+
+                // generic suggestions if none of the above matched
+                if (suggestions.length === 0) {
+                    suggestions.push('A measurable proficiency or mastery percentage tied to the goal (e.g., % passing standard test)');
+                    suggestions.push('A growth metric (e.g., average change in assessment scores over a period)');
+                    suggestions.push('At least one equity-disaggregated metric (e.g., by subgroup)');
+                }
+
+                // dedupe and return 3-5 suggestions
+                return Array.from(new Set(suggestions)).slice(0, 5);
+            }
+
+            if (suggestKpiBtn && kpiGoalInput) {
+                suggestKpiBtn.addEventListener('click', () => {
+                    const goal = kpiGoalInput.value.trim();
+                    if (!goal) {
+                        showModal('Enter a Goal', '<p>Please type one of your school goals first (for example: "Improve 9th-grade math scores").</p>');
+                        return;
+                    }
+                    const kpis = simpleKpiGenerator(goal);
+                    let html = `<p class="mb-3">For the goal: <strong>${escapeHtml(goal)}</strong>, consider these KPIs:</p><ol class="list-decimal pl-5">`;
+                    kpis.forEach(k => html += `<li class="mb-2">${escapeHtml(k)}</li>`);
+                    html += `</ol><p class="mt-4 text-sm text-gray-600">Tip: pick 3-5 KPIs, and make each one time-bound and numeric (e.g., "increase from 61% to 75% by June 2026").</p>`;
+                    showModal('Suggested KPIs', html);
+                });
+            }
+
+            // small HTML escape helper
+            function escapeHtml(str) {
+                return String(str)
+                    .replace(/&/g, '&amp;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#39;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;');
+            }
+
+            // -------- Chart setup (Chart.js) --------
+            const colors = {
+                blue: '#00A1E4',
+                cyan: '#00BADE',
+                aqua: '#00D2D2',
+                lightAqua: '#89FFFF',
+                bg: '#F5FFFF',
+                text: '#333'
+            };
+
+            const tooltipTitleCallback = (tooltipItems) => {
+                const item = tooltipItems[0];
+                let label = item.chart.data.labels[item.dataIndex];
+                if (Array.isArray(label)) {
+                    return label.join(' ');
+                }
+                return label;
+            };
+
+            const wrapLabels = (label) => {
+                if (typeof label === 'string' && label.length > 16) {
+                    const words = label.split(' ');
+                    const lines = [];
+                    let currentLine = '';
+                    words.forEach(word => {
+                        if ((currentLine + word).length > 16 && currentLine.length > 0) {
+                            lines.push(currentLine.trim());
+                            currentLine = word + ' ';
+                        } else {
+                            currentLine += word + ' ';
+                        }
+                    });
+                    lines.push(currentLine.trim());
+                    return lines;
+                }
+                return label;
+            };
+
+            const chartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { labels: { color: colors.text } },
+                    tooltip: { callbacks: { title: tooltipTitleCallback } }
+                },
+                scales: {
+                    y: { ticks: { color: colors.text }, grid: { color: '#ddd' } },
+                    x: { ticks: { color: colors.text }, grid: { display: false } }
+                }
+            };
+
+            const pieDoughnutOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { color: colors.text } },
+                    tooltip: { callbacks: { title: tooltipTitleCallback } }
+                }
+            };
+
+            const radarOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { position: 'bottom', labels: { color: colors.text } },
+                    tooltip: { callbacks: { title: tooltipTitleCallback } }
+                },
+                scales: {
+                    r: {
+                        angleLines: { color: '#ddd' },
+                        grid: { color: '#ddd' },
+                        pointLabels: { color: colors.text, font: { size: 13 } },
+                        ticks: { color: colors.text, backdropColor: 'transparent', stepSize: 1 },
+                        min: 0,
+                        max: 5
+                    }
+                }
+            };
+
+            // Chart 1: Quality Data (Donut)
+            const qualityCtx = document.getElementById('qualityDataChart');
+            if (qualityCtx) {
+                new Chart(qualityCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Accurate', 'Timely', 'Consistent', 'Relevant'],
+                        datasets: [{
+                            label: 'Quality Data Pillars',
+                            data: [25, 25, 25, 25],
+                            backgroundColor: [colors.blue, colors.cyan, colors.aqua, colors.lightAqua],
+                            borderColor: '#fff',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: pieDoughnutOptions
+                });
+            }
+
+            // Chart 2: KPIs (Bar)
+            const kpiCtx = document.getElementById('kpiBarChart');
+            if (kpiCtx) {
+                const kpiLabels = [
+                    '% 9th Graders on Track',
+                    '% 3rd Graders Reading',
+                    'Daily Attendance Rate',
+                    'Teacher Retention'
+                ].map(wrapLabels);
+
+                new Chart(kpiCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: kpiLabels,
+                        datasets: [
+                            {
+                                label: 'Current Performance',
+                                data: [82, 61, 95, 88],
+                                backgroundColor: colors.cyan,
+                                borderRadius: 4
+                            },
+                            {
+                                label: 'Goal',
+                                data: [90, 80, 95, 90],
+                                backgroundColor: colors.blue,
+                                borderRadius: 4
+                            }
+                        ]
+                    },
+                    options: chartOptions
+                });
+            }
+
+            // Chart 3: Trends (Line)
+            const trendsCtx = document.getElementById('trendsLineChart');
+            if (trendsCtx) {
+                new Chart(trendsCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Year 1', 'Year 2', 'Year 3'],
+                        datasets: [
+                            {
+                                label: 'All Students',
+                                data: [45, 48, 51],
+                                borderColor: colors.blue,
+                                backgroundColor: hexToRgba(colors.blue, 0.2),
+                                fill: true,
+                                tension: 0.1
+                            },
+                            {
+                                label: 'Subgroup A',
+                                data: [22, 24, 26],
+                                borderColor: colors.aqua,
+                                backgroundColor: hexToRgba(colors.aqua, 0.15),
+                                fill: true,
+                                tension: 0.1
+                            },
+                            {
+                                label: 'Subgroup B',
+                                data: [75, 78, 81],
+                                borderColor: colors.cyan,
+                                backgroundColor: hexToRgba(colors.cyan, 0.12),
+                                fill: true,
+                                tension: 0.1
+                            }
+                        ]
+                    },
+                    options: chartOptions
+                });
+            }
+
+            // Chart 4: Dashboard (Radar)
+            const radarCtx = document.getElementById('dashboardRadarChart');
+            if (radarCtx) {
+                new Chart(radarCtx, {
+                    type: 'radar',
+                    data: {
+                        labels: ['Simple', 'Clear', 'Visual', 'Accessible', 'Timely'],
+                        datasets: [{
+                            label: 'Dashboard Score (out of 5)',
+                            data: [4, 5, 5, 2, 3],
+                            backgroundColor: hexToRgba(colors.cyan, 0.25),
+                            borderColor: colors.cyan,
+                            pointBackgroundColor: colors.cyan,
+                            pointBorderColor: '#fff',
+                            pointHoverBackgroundColor: '#fff',
+                            pointHoverBorderColor: colors.cyan
+                        }]
+                    },
+                    options: radarOptions
+                });
+            }
+
+            // small helper to create rgba from hex
+            function hexToRgba(hex, alpha) {
+                hex = hex.replace('#', '');
+                if (hex.length === 3) {
+                    hex = hex.split('').map(h => h + h).join('');
+                }
+                const bigint = parseInt(hex, 16);
+                const r = (bigint >> 16) & 255;
+                const g = (bigint >> 8) & 255;
+                const b = bigint & 255;
+                return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+            }
+        });
+    </script>
+</body>
+</html>
